@@ -3,21 +3,21 @@ import sqlite3
 
 conn = sqlite3.connect('travel_agency.db')
 
-# Создание курсора для выполнения SQL-запросов
+
 cursor = conn.cursor()
 
 # Создание таблицы Customers (Клиенты)
 cursor.execute('''CREATE TABLE IF NOT EXISTS Customers (
     CustomerID INTEGER PRIMARY KEY,
-    FirstName TEXT,
-    LastName TEXT,
-    Email TEXT
+    FirstName VARCHAR,
+    LastName VARCHAR,
+    Email VARCHAR
 )''')
 
 # Создание таблицы Tours (Туры)
 cursor.execute('''CREATE TABLE IF NOT EXISTS Tours (
     TourID INTEGER PRIMARY KEY,
-    TourName TEXT,
+    TourName VARCHAR,
     StartDate DATE,
     EndDate DATE,
     Price INTEGER
@@ -26,9 +26,9 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS Tours (
 # Создание таблицы Hotels (Отели)
 cursor.execute('''CREATE TABLE IF NOT EXISTS Hotels (
     HotelID INTEGER PRIMARY KEY,
-    HotelName TEXT,
-    City TEXT,
-    Country TEXT,
+    HotelName VARCHAR,
+    City VARCHAR,
+    Country VARCHAR,
     Rating REAL
 )''')
 
@@ -38,11 +38,11 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS Bookings (
     CustomerID INTEGER,
     TourID INTEGER,
     BookingDate DATE,
-    PaymentStatus TEXT,
+    PaymentStatus VARCHAR,
     HotelID INTEGER,
-    FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID),
-    FOREIGN KEY (TourID) REFERENCES Tours (TourID),
-    FOREIGN KEY (HotelID) REFERENCES Hotels (HotelID)
+    FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE,
+    FOREIGN KEY (TourID) REFERENCES Tours (TourID) ON DELETE CASCADE,
+    FOREIGN KEY (HotelID) REFERENCES Hotels (HotelID) ON DELETE CASCADE
 )''')
 
 # Создание таблицы Payments (Платежи)
@@ -50,15 +50,15 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS Payments (
     PaymentID INTEGER PRIMARY KEY,
     BookingID INTEGER,
     PaymentAmount INTEGER,
-    FOREIGN KEY (BookingID) REFERENCES Bookings (BookingID)
+    FOREIGN KEY (BookingID) REFERENCES Bookings (BookingID) ON DELETE CASCADE
 )''')
 
 # Создание таблицы TourGuides (Гиды)
 cursor.execute('''CREATE TABLE IF NOT EXISTS TourGuides (
     GuideID INTEGER PRIMARY KEY,
-    FirstName TEXT,
-    LastName TEXT,
-    Email TEXT
+    FirstName VARCHAR,
+    LastName VARCHAR,
+    Email VARCHAR
 )''')
 
 # Создание таблицы TouristGroups (Группы туристов)
@@ -67,8 +67,8 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS TouristGroups (
     TourID INTEGER,
     GuideID INTEGER,
     DepartureDate DATE,
-    FOREIGN KEY (TourID) REFERENCES Tours (TourID),
-    FOREIGN KEY (GuideID) REFERENCES TourGuides (GuideID)
+    FOREIGN KEY (TourID) REFERENCES Tours (TourID) ON DELETE CASCADE,
+    FOREIGN KEY (GuideID) REFERENCES TourGuides (GuideID) ON DELETE CASCADE
 )''')
 
 # Создание таблицы TouristGroupMembers (Участники группы туристов)
@@ -83,7 +83,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS TouristGroupMembers (
 # Создание таблицы Excursions (Экскурсии)
 cursor.execute('''CREATE TABLE IF NOT EXISTS Excursions (
     ExcursionID INTEGER PRIMARY KEY,
-    ExcursionName TEXT,
+    ExcursionName VARCHAR,
     Price INTEGER
 )''')
 
@@ -93,9 +93,9 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS ExcursionBookings (
     CustomerID INTEGER,
     ExcursionID INTEGER,
     BookingDate DATE,
-    PaymentStatus TEXT,
-    FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID),
-    FOREIGN KEY (ExcursionID) REFERENCES Excursions (ExcursionID)
+    PaymentStatus VARCHAR,
+    FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE,
+    FOREIGN KEY (ExcursionID) REFERENCES Excursions (ExcursionID) ON DELETE CASCADE
 )''')
 
 # Сохранение изменений и закрытие соединения
