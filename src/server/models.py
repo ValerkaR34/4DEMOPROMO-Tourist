@@ -72,7 +72,7 @@ class Excursions(BaseModel):
 
 
 class ExcursionBookings(BaseModel):
-    BookingID: int
+    ExcursionBookingID: int
     CustomerID: int
     ExcursionID: int
     BookingDate: date

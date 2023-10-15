@@ -1,10 +1,10 @@
 from typing import List
 
-from  fastapi import  APIRouter
+from  fastapi import APIRouter
 
-router = APIRouter
+router = APIRouter()
 
-from ...models import  Hotels
+from ..models import  Hotels
 
 
 @router.get('/')
@@ -17,13 +17,13 @@ def get_currenr_hotel(HotelID: int) -> Hotels:
     return {"HotelID": HotelID, "HotelName": f"Отель с id{HotelID}"}
 
 @router.post('/')
-def add_Hotel(new_hotel: Hotels) -> Hotels:
+def add_hotel(new_hotel: Hotels) -> Hotels:
     return {"id": 10, "HotelName": new_hotel.HotelName}
 
 
 @router.put('/{HotelID}')
 def update_hotel(HotelID: int, updated_hotel: Hotels) -> Hotels:
-    return {"HotelID": HotelID, "HotelName": updated_hotel.name, "City": updated_hotel.city, "Country": updated_hotel.country, "Rating": updated_hotel.rating}
+    return {"HotelID": HotelID, "HotelName": updated_hotel.HotelName, "City": updated_hotel.City, "Country": updated_hotel.Country, "Rating": updated_hotel.Rating}
 
 
 @router.delete("/{HotelID}")

@@ -2,12 +2,18 @@ from fastapi import FastAPI
 import uvicorn
 
 from fastapi.responses import RedirectResponse
-from src import router as group_hotels
+from server.routers import hotel_router, Excursions_router, Bookings_router, Tours_router, Customers_router, tourguides_router, ExcursionBookings_router
 
 app = FastAPI()
 
 
-app.include_router(group_hotels, prefix="/hotels")
+app.include_router(hotel_router, prefix="/hotels")
+app.include_router(Bookings_router, prefix="/Bookings")
+app.include_router(Excursions_router, prefix="/Excursions")
+app.include_router(Tours_router, prefix="/Tours")
+app.include_router(Customers_router, prefix="/Customers")
+app.include_router(tourguides_router, prefix="/tourguides")
+app.include_router(ExcursionBookings_router, prefix="/ExcursionBookings")
 
 @app.get('/')
 def root():
