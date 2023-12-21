@@ -6,7 +6,7 @@ hotels_router = fastapi.APIRouter(prefix="/hotels", tags=["Hotels"])
 
 from ..models import  Hotels
 
-from server.resolvers.hotel import  new_hotel,get_hotel,get_all_hotel,delete_hotel,update_hotel
+from server.resolvers.hotel import new_hotel,get_hotel,get_all_hotel,delete_hotel,update_hotel
 
 @hotels_router.get("/")
 def start_page():
@@ -22,8 +22,8 @@ def get_currenr_hotel(HotelID: int) -> Hotels:
     return get_hotel(HotelID)
 
 @hotels_router.post('/new/')
-def add_hotel(new_hotel: Hotels) -> Hotels:
-    return new_hotel(Hotels)
+def add_hotel(hotel: Hotels) -> Hotels:
+    return new_hotel(hotel)
 
 
 @hotels_router.put('/update/{HotelID}')

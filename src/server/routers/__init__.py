@@ -1,4 +1,4 @@
-from .hotels import router as hotel_router
+from .hotels import hotels_router
 from .Excursions import router as Excursions_router
 from .Bookings import router as Bookings_router
 from .Customers import router as Customers_router

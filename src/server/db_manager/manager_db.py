@@ -1,11 +1,11 @@
 import sqlite3
 import os
 
-import settings
+
 from settings import DB_PATH
 
 class DBManager:
-    def __int__(self,db_path: str) -> None:
+    def __init__(self,db_path: str) -> None:
         self.db_path = db_path
 
     def check_base(self):
@@ -42,4 +42,4 @@ class DBManager:
                 conn.close()
 
 
-base_manager = DBManager(settings.DB_PATH)
+base_manager = DBManager(DB_PATH)

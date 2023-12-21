@@ -13,9 +13,9 @@ def get_hotel(HotelID: int):
 def get_all_hotel():
     return base_manager.execute(query="SELECT HotelID,HotelName,City,Country,Rating FROM Hotels", many=True)
 
-def delete_hotel(HotelsID: int):
+def delete_hotel(HotelID: int):
     return base_manager.execute(query="DELETE FROM Hotels WHERE HotelID=?",
-                                args=(HotelsID))
+                                args=(HotelID))
 
 def update_hotel(Hotels: Hotels, HotelsID: int):
     update = base_manager.execute(f"""update Hotels set (HotelName,City,Country,Rating) = (?,?,?,?) where HotelsID=(?);""",
