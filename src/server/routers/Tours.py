@@ -1,31 +1,35 @@
 from typing import List
 
-from  fastapi import APIRouter
+import fastapi
 
-router = APIRouter()
+Tours_router = fastapi.APIRouter(prefix="/tours", tags=["Tours"])
 
 from ..models import  Tours
 
+from server.resolvers.Tours import new_tour,get_tour,get_all_tour,delete_tour,update_tour
 
-@router.get('/')
+@Tours_router.get("/")
+def start_page():
+    return ""
+@Tours_router.get('/get/')
 def get_tours() -> List[Tours]:
-    return ({"TourID": 1, })
+    return get_all_tour()
 
 
-@router.get('/{ToursID}')
+@Tours_router.get('/get/{ToursID}')
 def get_currenr_tours(TourID: int) -> Tours:
-    return {"TourID": TourID, "TourName": f"Тур с id{TourID}"}
+    return get_tour(TourID)
 
-@router.post('/')
-def add_tours(new_tours: Tours) -> Tours:
-    return {"id": 10, "TourName": new_tours.TourName}
-
-
-@router.put('/{HotelID}')
-def update_tours(TourID: int, updated_tours: Tours) -> Tours:
-    return {"TourID": TourID, "TourName": updated_tours.TourName}
+@Tours_router.post('/new/')
+def add_tours(Tours: Tours) -> Tours:
+    return new_tour(Tours)
 
 
-@router.delete("/{TourID}")
-def delete_hotels(TourID: int) -> int:
-    return 200
+@Tours_router.put('/update/{HotelID}')
+def updates_tours(TourID: int, updated_tours: Tours) -> Tours:
+    return update_tour(Tours=updated_tours, TourID=TourID)
+
+
+@Tours_router.delete("/delete/{TourID}")
+def delete_tours(TourID: int) -> int:
+    return delete_tour(TourID)

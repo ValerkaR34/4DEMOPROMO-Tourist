@@ -1,31 +1,36 @@
 from typing import List
 
-from fastapi import APIRouter
+import fastapi
 
-router = APIRouter()
+customer_router = fastapi.APIRouter(prefix="/customers", tags=["Customers"])
 
 from ..models import Customers
 
 
-@router.get('/')
+from server.resolvers.customer import new_customer,update_customer,get_all_customer,get_customer,delete_customer
+
+@customer_router.get("/")
+def start_page():
+    return ""
+
+@customer_router.get('/get/')
 def get_Customers() -> List[Customers]:
-    return ({"CustomerID": 1, "First_name": "Rysi", "Last_Name": "Vilca", "Email": "puvarachev2034@yandex.ru"})
+    return get_all_customer()
 
 
-@router.get('/{CustomerID}')
+@customer_router.get('/{CustomerID}')
 def get_currenr_Customers(CustomerID: int) -> Customers:
-    return {"CustomerID": CustomerID}
+    return get_customer(CustomerID)
 
-@router.post('/')
-def add_customers(new_customers: Customers) -> Customers:
-    return {"id": 12, "Fitst_Name": new_customers.FirstName}
+@customer_router.post('/')
+def add_customers(customer: Customers) -> Customers:
+    return new_customer(customer)
 
 
-@router.put('/{HotelID}')
+@customer_router.put('/update/{HotelID}')
 def update_customers(CustomerID: int, updated_customer: Customers) -> Customers:
-    return {"CustomerID": CustomerID, "First_Name": updated_customer.FirstName, "email": updated_customer.Email}
+    return update_customer(Customers=updated_customer,CustomerID=CustomerID)
 
-
-@router.delete("/{CustomerID}")
+@customer_router.delete("/delete/{CustomerID}")
 def delete_customers(CustomerID: int) -> int:
-    return 200
+    return delete_customer(CustomerID)

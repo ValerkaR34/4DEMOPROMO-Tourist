@@ -2,30 +2,36 @@ from typing import List
 
 from fastapi import APIRouter
 
-router = APIRouter()
+import fastapi
+
+ExcursBook_router = fastapi.APIRouter(prefix="/excursionBookings", tags=["ExcursionBookings"])
+
+from server.resolvers.ExcursionBookings import new_Excurbook,delete_ExcursionBookings,update_ExcursionBookings,get_all_ExcursionBookings,get_ExcursionBookings
 
 from ..models import ExcursionBookings
 
 
-@router.get('/')
+@ExcursBook_router.get("/")
+def start_page():
+    return ""
+@ExcursBook_router.get('/get/')
 def get_ExcursionBookingID() -> List[ExcursionBookings]:
-    return ({"ExcursionBookingID": 3, "CustomerID": 3, "ExcursionID": 3, "BookingDate": "2023.11.08", "PaymentStatus": "Оплачено"})
+    return get_all_ExcursionBookings()
 
 
-@router.get('/{ExcursionBookingID}')
+@ExcursBook_router.get('/get/{ExcursionBookingID}')
 def get_currenr_ExcursionBooking(ExcursionBookingID: int) -> ExcursionBookings:
-    return {"ExcursionBookingID": ExcursionBookingID, "": f"где бронирование с id{ExcursionBookingID}"}
+    return get_ExcursionBookings(ExcursionBookingID)
 
-@router.post('/')
+@ExcursBook_router.post('/new/')
 def add_hotel(new_ExcursionBookings: ExcursionBookings) -> ExcursionBookings:
-    return {"ExcursionBookingID": new_ExcursionBookings.ExcursionBookingID}
+    return new_Excurbook(new_ExcursionBookings)
 
 
-@router.put('/{ExcursionBookingID}')
+@ExcursBook_router.put('/update/{ExcursionBookingID}')
 def update_hotel(ExcursionBookingID: int, updated_ExcursionBookings: ExcursionBookings) -> ExcursionBookings:
-    return {"ExcursionBookingsID": ExcursionBookingID, "BookingDate": updated_ExcursionBookings.BookingDate}
+    return update_ExcursionBookings(ExcursionBookings=updated_ExcursionBookings, ExcursionBookingID=ExcursionBookingID)
 
-
-@router.delete("/{ExcursionBookingID}")
+@ExcursBook_router.delete("/delete/{ExcursionBookingID}")
 def delete_hotels(ExcursionBookingID: int) -> int:
-    return 200
+    return delete_ExcursionBookings(ExcursionBookingID)

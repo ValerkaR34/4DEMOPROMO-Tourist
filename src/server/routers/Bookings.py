@@ -1,34 +1,37 @@
-from typing import  List
+from typing import List
 
-from fastapi import APIRouter
+import fastapi
 
-router = APIRouter()
+bookings_router = fastapi.APIRouter(prefix="/bookings", tags="Bookings")
 
 from ..models import  Bookings
 
+from server.resolvers.Bookings import new_Bookngs,update_bookings,delete_bookings,get_booking,get_all_booking
 
 
 
+@bookings_router.get("/")
+def start_page():
+    return ""
 
-@router.get('/')
+@bookings_router.get('/get/')
 def get_Bookings() -> List[Bookings]:
-    return ({"BookingID": 1, "CustomerID": 2,"TourID": 3, "Booking_Date":"12.12.2094","PaymentStatus": "Не оплачен", "HotelID": 3})
+    return get_all_booking()
 
-
-@router.get('/{BookingID}')
+@bookings_router.get('/get/{BookingID}')
 def get_currenr_bookings(BookingID: int) -> Bookings:
-    return {"BookingID": BookingID, "BookingName": f"бронированние  с id{BookingID}"}
+    return get_booking(BookingID)
 
-@router.post('/')
-def add_hotel(new_Bookings: Bookings) -> Bookings:
-    return {"BookingID": 2, "PaymentStatus": new_Bookings.PaymentStatus, "BookingDate": new_Bookings.BookingDate}
+@bookings_router.post('/new/')
+def add_hotel(ne_Bookings: Bookings) -> Bookings:
+    return new_Bookngs(ne_Bookings)
 
 
-@router.put('/{BookingID}')
+@bookings_router.put('/update/{BookingID}')
 def update_hotel(BookingID: int, updated_booking: Bookings) -> Bookings:
-    return {"BookingID": BookingID, "Boking": updated_hotel.HotelName, "City": updated_hotel.City, "Country": updated_hotel.Country, "Rating": updated_hotel.Rating}
+    return update_bookings(Bookings=updated_booking,BookingID=BookingID)
 
 
-@router.delete("/{BookigsID}")
+@bookings_router.delete("/delete/{BookigsID}")
 def delete_bookings(BookingsID: int) -> int:
-    return 200
+    return delete_bookings(BookingsID)

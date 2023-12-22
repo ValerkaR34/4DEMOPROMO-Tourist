@@ -15,8 +15,8 @@ class Customers(BaseModel):
 class Tours(BaseModel):
     TourID: int
     TourName: str
-    StartDate: date
-    EndDate: date
+    StartDate: str
+    EndDate: str
     Price: int
 
 
@@ -34,7 +34,7 @@ class Bookings(BaseModel):
     BookingID: int
     CustomerID: int
     TourID: int
-    BookingDate: date
+    BookingDate: str
     PaymentStatus: str
     HotelID: int
 
@@ -75,7 +75,7 @@ class ExcursionBookings(BaseModel):
     ExcursionBookingID: int
     CustomerID: int
     ExcursionID: int
-    BookingDate: date
+    BookingDate: str
     PaymentStatus: str
 
 

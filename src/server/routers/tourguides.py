@@ -1,29 +1,34 @@
 from typing import List
 
-from  fastapi import APIRouter
+import fastapi
 
-router = APIRouter()
+tourgGuides_router = fastapi.APIRouter(prefix="/Guide", tags=["TourGuides"])
 
 from ..models import TourGuides
 
-@router.get('/')
+from  server.resolvers.TourGuides import new_tourguidesy,get_guide,get_all_guide,delete_guide,update_guide
+
+@tourgGuides_router.get("/")
+def start_page():
+    return ""
+
+@tourgGuides_router.get('/')
 def get_TourGuides() -> List[TourGuides]:
-    return ({"GuideID:": 1, "First_name": "Anton", "Last_Name": "Volcov", "Email": "pugachev2004@yandex.ru"})
+    return get_all_guide()
 
-@router.get('/{GuideID}')
+@tourgGuides_router.get('/{GuideID}')
 def get_currenr_guide(GuideID: int) -> TourGuides:
-    return {"GuideID": GuideID, "First_Name": f"ГИД с id{GuideID}"}
+    return get_guide(GuideID)
 
-@router.post('/')
+@tourgGuides_router.post('/')
 def add_guide(new_tourguides: TourGuides) -> TourGuides:
-    return {"id": 10, "HotelName": new_tourguides.FirstName}
+    return new_tourguidesy(new_tourguides)
 
 
-@router.put('/{HotelID}')
-def update_guide(GuideID: int, updated_guides: TourGuides) -> TourGuides:
-    return {"GuideID": GuideID, "First_Name": updated_guides.FirstName, "Last_Name": updated_guides.LastName, "email": updated_guides.Email}
+@tourgGuides_router.put('/{HotelID}')
+def update_guidess(GuideID: int, updated_guides: TourGuides) -> TourGuides:
+    return update_guide(TourGuides=updated_guides,GuideID=GuideID)
 
-
-@router.delete("/{GuideID}")
+@tourgGuides_router.delete("/delete/{GuideID}")
 def delete_guide(GuideID: int) -> int:
-    return 200
+    return delete_guide(GuideID)
