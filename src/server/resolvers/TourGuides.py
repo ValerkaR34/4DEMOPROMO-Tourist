@@ -17,7 +17,7 @@ def get_all_guide():
 
 def delete_guide(GuideID: int):
     return base_manager.execute(query='DELETE FROM TourGuides WHERE GuideID=?',
-                                args=GuideID)
+                                args=(GuideID,))
 
 def update_guide(TourGuides: TourGuides, GuideID: int):
     update = base_manager.execute(f"""update TourGuides set (FirstName,LastName,Email) = (?,?,?) where GuideID=(?);""",

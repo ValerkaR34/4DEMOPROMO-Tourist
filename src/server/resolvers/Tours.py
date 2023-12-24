@@ -17,7 +17,7 @@ def get_all_tour():
 
 def delete_tour(TourID:int):
     return base_manager.execute("DELETE From Tours WHERE TourID=?",
-                                args=(TourID))
+                                args=(TourID,))
 
 def update_tour(Tours: Tours, TourID: int):
     updaitc = base_manager.execute(f"""update Tours set (TourName,StartDate,EndDate,Price) = (?,?,?,?) where TourID=(?);""",

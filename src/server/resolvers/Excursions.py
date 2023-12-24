@@ -14,7 +14,7 @@ def update_excur(Excursiones: Excursions, ExcursionID: int):
 
 def delete_excur(ExcursionID: int):
     return base_manager.execute(query="DELETE FROM Excursions WHERE ExcursionID=?",
-                                args=(ExcursionID))
+                                args=(ExcursionID,))
 
 
 def get_excur(ExcursionID: int):

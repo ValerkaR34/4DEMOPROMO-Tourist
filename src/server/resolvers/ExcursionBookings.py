@@ -19,7 +19,7 @@ def get_all_ExcursionBookings():
 def delete_ExcursionBookings(ExcursionBookingID: int):
 
     return base_manager.execute(query="DELETE FROM ExcursionBookings WHERE ExcursionBookingID=?",
-                                args=(ExcursionBookingID))
+                                args=(ExcursionBookingID,))
 
 def update_ExcursionBookings(ExcursionBookings: ExcursionBookings, ExcursionBookingID: int):
     update = base_manager.execute(f"""update ExcursionBookings set (ExcursionID,CustomerID,BokingDate,PaymentStatus) = (?,?,?,?) where  ExcursionBookingID=(?);""",

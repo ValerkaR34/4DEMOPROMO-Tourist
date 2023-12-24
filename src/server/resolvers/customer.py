@@ -14,7 +14,7 @@ def update_customer(Customeers: Customers, CustomerID: int):
 
 def delete_customer(CustomerID: int):
     return base_manager.execute(query="DELETE FROM Customers WHERE CustomerID=?",
-                                args=(CustomerID))
+                                args=(CustomerID,))
     
 
 def get_customer(CustomerID: int):

@@ -16,7 +16,7 @@ def get_all_booking():
 
 def delete_bookings(BookingID: int):
     return base_manager.execute("DELETE From Bookings WHERE BookingID=?",
-                                args=(BookingID))
+                                args=(BookingID,))
 
 def update_bookings(Bookings: Bookings, BookingID: int):
     updantic = base_manager.execute(f"""update Bookings set (CustomerID,TourID,BookingDate,PaymentStatus,HotelID FROM Bookings) = (?,?,?,?,?) where BookingID=(?);""",
